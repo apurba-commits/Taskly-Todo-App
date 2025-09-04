@@ -1,0 +1,25 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Created - Taskly</title>
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body>
+
+    <div class="profile-container">
+        <div class="profile-inner">
+            <img src="{% static 'tasks/logo.png' %}" alt="Taskly Logo" class="profile-pic">
+            <span class="profile-text">Taskly</span>
+        </div>
+    </div>
+
+    <div class="success-message-container">
+        <h1>Account Created Successfully!</h1>
+        <p>Your account has been registered. You can now login to Taskly.</p>
+        <a href="{% url 'sign_in' %}" class="login-button">Go to Login</a>
+    </div>
+
+</body>
+</html>

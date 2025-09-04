@@ -1,0 +1,35 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}"> <!-- Your existing CSS -->
+</head>
+<body>
+
+    <div class="profile-container">
+        <div class="profile-inner">
+            <img src="{% static 'tasks/logo.png' %}" alt="Taskly Logo" class="profile-pic">
+            <span class="profile-text">Taskly</span>
+        </div>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+        <button type="submit">Login</button>
+        <p class="signup-text">Don't have an account? <a href="{% url 'sign_up' %}">Sign Up</a></p>
+        <a href="{% url 'reset_password' %}" class="forgot-password">Forgot Password?</a>
+    </form>
+
+</body>
+</html>

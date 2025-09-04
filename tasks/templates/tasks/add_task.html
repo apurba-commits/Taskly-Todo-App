@@ -1,0 +1,37 @@
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Task</title>
+  <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body>
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+  </nav>
+
+  <h1>Add New Task</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <label>Title:</label>
+    <input type="text" name="title" required>
+
+    <label>Description:</label>
+    <textarea name="description" rows="4"></textarea>
+
+    <label>Deadline:</label>
+    <input type="date" name="deadline">
+
+    <label>Status:</label>
+    <select name="status">
+      <option value="completed">Completed</option>
+      <option value="pending">Pending</option>
+      <option value="not_started">Not started</option>
+      <option value="in-progress">In progress</option>
+    </select>
+
+    <button type="submit">Save Task</button>
+  </form>
+</body>
+</html>

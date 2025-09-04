@@ -1,0 +1,16 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Sent</title>
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body>
+    <div class="message-box">
+        <h2>Check your email</h2>
+        <p>If your email is registered, you’ll get a link to reset your password.</p>
+        <a href="{% url 'sign_in' %}">Back to Login</a>
+    </div>
+</body>
+</html>

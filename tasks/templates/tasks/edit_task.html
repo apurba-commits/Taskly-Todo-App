@@ -1,0 +1,56 @@
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Task</title>
+  <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body>
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'add_task' %}">Add Task</a>
+  </nav>
+
+  <h1>Edit Task</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <label>Title:</label>
+    <input type="text" name="title" value="{{task.title}}" required>
+
+    <label>Description:</label>
+    <textarea name="description" rows="4">{{task.description}}</textarea>
+
+    <label>Deadline:</label>
+    <input type="date" name="deadline" value="{{ task.deadline|date:'Y-m-d' }}">
+
+    <label>Status:</label>
+    <select name="status">
+      {% if task.status == 'completed' %}
+      <option value="completed" selected>Completed</option>
+      <option value="pending">Pending</option>
+      <option value="not_started">Not started</option>
+      <option value="in-progress">In progress</option>
+      {% elif task.status == 'pending' %}
+      <option value="completed">Completed</option>
+      <option value="pending" selected>Pending</option>
+      <option value="not_started">Not started</option>
+      <option value="in-progress">In progress</option>
+      {% elif task.status == 'not_started' %}
+      <option value="completed">Completed</option>
+      <option value="pending" >Pending</option>
+      <option value="not_started" selected>Not started</option>
+      <option value="in-progress">In progress</option>
+      {% else %}
+       <option value="completed">Completed</option>
+      <option value="pending" >Pending</option>
+      <option value="not_started">Not started</option>
+      <option value="in-progress" selected>In progress</option>
+      {% endif %}
+    </select>
+
+
+    <button type="submit">Update Task</button>
+  </form>
+</body>
+</html>

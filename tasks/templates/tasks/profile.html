@@ -1,0 +1,85 @@
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body>
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+  </nav>
+
+  <!-- ✅ Django messages -->
+  {% if messages %}
+  <div class="messages" align="center">
+    {% for message in messages %}
+      <div class="message {{ message.tags }}"
+           style="{% if message.tags == 'success' %}color:green;
+                  {% elif message.tags == 'error' %}color:red;
+                  {% elif message.tags == 'warning' %}color:orange;
+                  {% else %}color:blue;{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+  <!-- ✅ Custom error messages -->
+  {% if error %}
+    <div class="messages" align="center">
+      {% for e in error %}
+        <div class="message error">{{ e }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="profile-page">
+
+    <!-- Profile Picture -->
+    <div class="profile-section">
+      {% if user.profile and user.profile.image %}
+        <img class="profile-pic-large" src="{{ user.profile.image.url }}" alt="Profile Picture">
+      {% else %}
+        <img class="profile-pic-large" src="{% static 'tasks/default.png' %}" alt="Default Picture">
+      {% endif %}
+
+      <form method="POST" enctype="multipart/form-data" class="inline-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="update_image">
+        <input type="file" name="image" class="file-input" required>
+        <button type="submit" class="btn">Change</button>
+      </form>
+    </div>
+
+    <!-- Username -->
+    <div class="profile-section">
+      <span class="label">Name:</span>
+      <span class="value">{{ user.username }}</span>
+      <form method="POST" class="inline-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="update_username">
+        <input type="text" name="username" placeholder="New Name" required>
+        <button type="submit" class="btn">Change</button>
+      </form>
+    </div>
+
+    <!-- Password -->
+    <div class="profile-section">
+      <form method="POST" class="inline-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="update_password">
+        <span class="label">Old Password:</span>
+        <input type="password" name="old_password" placeholder="Old Password" required>
+        <span class="label">New Password:</span>
+        <input type="password" name="new_password" placeholder="New Password" required>
+        <span class="label">Confirm Password:</span>
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+        <button type="submit" class="btn">Change</button>
+      </form>
+    </div>
+
+  </div>
+</body>
+</html>

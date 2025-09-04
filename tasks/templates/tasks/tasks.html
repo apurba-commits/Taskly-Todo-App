@@ -1,0 +1,66 @@
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task List</title>
+  <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'add_task' %}">Add Task</a>
+  </nav>
+
+  <!-- Profile section -->
+  <div class="profile-container" align="center">
+    <a href="{% url 'profile' %}">
+      <div class="profile-inner">
+          {% if user.profile.image %}
+              <img class="profile-pic" src="{{ user.profile.image.url }}" alt="Profile Picture">
+          {% else %}
+              <img class="profile-pic" src="{% static 'tasks/default.png' %}" alt="Default Profile Picture">
+          {% endif %}
+          <span class="profile-text">Hi, {{ user.username }}</span>
+    </a>
+          <a href="{% url 'sign_out' %}" class="logout-btn">Logout</a>
+      </div>
+  </div>
+
+  <!-- Task Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Task Name</th>
+        <th>Due</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for task in tasks %}
+      <tr>
+        <td>{{ task.title }}</td>
+        <td>{{ task.deadline }}</td>
+        {% if task.status == 'completed' %}
+          <td class="completed">Completed</td>
+        {% elif task.status == 'pending' %}
+          <td class="pending">Pending</td>
+        {% elif task.status == 'not_started' %}
+          <td class="overdue">Not Started</td>
+        {% else %}
+          <td class="progress">In Progress</td>
+        {% endif %}
+        <td>
+          <a href="{% url 'edit_task' task.uuid %}">Edit</a> |
+          <a href="{% url 'delete_task' task.uuid %}">Delete</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+</body>
+</html>
