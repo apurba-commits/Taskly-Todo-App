@@ -66,7 +66,7 @@ ROOT_URLCONF = 'Taskly.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'tasks', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,7 +88,9 @@ WSGI_APPLICATION = 'Taskly.wsgi.application'
 
 DATABASES = {
     "default": dj_database_url.config(
-        default="sqlite:///" + str(BASE_DIR / "db.sqlite3")
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        conn_health_checks=True,
     )
 }
 
