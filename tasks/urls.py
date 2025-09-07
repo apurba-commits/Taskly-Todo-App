@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include, reverse_lazy
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -16,13 +16,6 @@ urlpatterns = [
     path('logout/',views.sign_out,name='sign_out'),
     path('reset/',views.reset_password,name='reset_password'),
     path('reset_confirm',views.reset_confirm,name='reset_confirm'),
-    path(
-        'reset/<uidb64>/<token>/',
-        auth_views.PasswordResetConfirmView.as_view(
-            template_name="tasks/set_new_password.html",
-            success_url='/password_changed/'
-        ),
-        name='password_reset_confirm',
-    ),
+    path('reset/<uidb64>/<token>/',views.set_new_password,name='password_reset_confirm'),
     path('password_changed/',views.password_changed,name='password_changed')
 ]
